@@ -1,0 +1,28 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+title Diagrama de Componentes - Frontend (Angular SPA)
+
+Container(api, "API REST Backend", "Spring Boot", "Provee datos y lógica")
+
+Container_Boundary(spa, "Frontend Application") {
+    
+    Component(shared, "Shared Module", "NgModule", "Componentes UI reutilizables, Guards de seguridad e Interceptores HTTP.")
+    
+    Component(auth, "Auth Module", "NgModule", "Gestión de sesión, Login y recuperación de contraseña.")
+    Component(enroll, "Inscripción Module", "NgModule", "Wizard de inscripción: Validación RUDE, Carga de Docs y Biometría.")
+    Component(catalog, "Catálogo Module", "NgModule", "Búsqueda pública de colegios con filtros (Zona, Nivel) y mapas.")
+    Component(admin, "Admin Module", "NgModule", "Panel de gestión para directores: Revisión de listas y aprobación de cupos.")
+
+    Rel(auth, api, "Autenticación (JWT)", "JSON/HTTPS")
+    Rel(enroll, api, "Envío de formularios", "JSON/HTTPS")
+    Rel(catalog, api, "Consulta de colegios", "JSON/HTTPS")
+    Rel(admin, api, "Gestión administrativa", "JSON/HTTPS")
+
+    Rel(shared, auth, "Provee utilidades")
+    Rel(shared, enroll, "Provee UI components")
+    Rel(shared, catalog, "Provee UI components")
+    Rel(shared, admin, "Provee UI components")
+}
+@enduml

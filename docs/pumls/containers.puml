@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+title Diagrama de Contenedores - Arquitectura del Sistema
+
+Person(parent, "Padre de Familia", "Usuario web")
+Person(admin, "Personal Administrativo", "Usuario web")
+
+System_Boundary(c1, "Sistema de Inscripciones") {
+    Container(spa, "Single-Page Application", "Angular 18, TypeScript", "Interfaz de usuario reactiva para gestión de inscripciones y consultas públicas.")
+    Container(api, "API REST Backend", "Spring Boot 3, Java 21", "Núcleo de lógica de negocio, seguridad y orquestación de servicios.")
+    ContainerDb(db, "Base de Datos Relacional", "PostgreSQL 15", "Persistencia transaccional de estudiantes, inscripciones y configuración escolar.")
+    Container(files, "Repositorio de Archivos", "File System Local / S3", "Almacenamiento seguro de documentos digitales (PDF, Imágenes).")
+}
+
+Rel(parent, spa, "Interactúa mediante navegador", "HTTPS")
+Rel(admin, spa, "Gestiona solicitudes", "HTTPS")
+
+Rel(spa, api, "Consume endpoints", "JSON/REST over HTTPS")
+Rel(api, db, "Consultas y Transacciones", "JDBC/JPA")
+Rel(api, files, "Lectura/Escritura de Docs", "File I/O")
+
+@enduml

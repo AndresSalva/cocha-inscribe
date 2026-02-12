@@ -1,0 +1,7 @@
+{
+  "name": "Sistema de Inscripción Escolar - Bolivia",
+  "description": "Plataforma institucional moderna para el proceso de inscripción escolar y verificación de identidad del Ministerio de Educación.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

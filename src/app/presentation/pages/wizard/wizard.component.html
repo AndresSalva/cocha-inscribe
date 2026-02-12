@@ -1,0 +1,67 @@
+<div
+  class="min-h-screen bg-gray-50/50 dark:bg-gray-950 font-sans text-gray-800 dark:text-gray-200 transition-colors duration-300">
+  <div class="max-w-5xl mx-auto py-12 px-6">
+
+    <!-- Stepper (Visual component) -->
+    <div class="flex items-center justify-between mb-12 relative px-4 select-none">
+      <!-- Logic line -->
+      <div class="absolute top-6 left-10 right-10 h-0.5 bg-gray-200 dark:bg-gray-800 -z-10 rounded-full"></div>
+      <div class="absolute top-6 left-10 h-0.5 bg-institutional transition-all duration-700 ease-out -z-10 rounded-full"
+        [style.width.%]="progress()"></div>
+
+      <div *ngFor="let s of steps" class="flex flex-col items-center gap-3 group cursor-pointer" (click)="goToStep(s)">
+        <div [ngClass]="{
+             'bg-institutional text-white scale-110 shadow-xl shadow-institutional/30': currentStep() >= s,
+             'bg-white text-gray-300 border-2 border-gray-200 dark:bg-gray-900 dark:text-gray-600 dark:border-gray-800': currentStep() < s,
+             'ring-2 ring-offset-2 ring-institutional dark:ring-offset-gray-900': currentStep() === s
+           }"
+          class="w-12 h-12 rounded-2xl flex items-center justify-center font-black transition-all duration-300 ease-out z-10 relative">
+          <span class="material-icons text-sm" *ngIf="currentStep() > s">check</span>
+          <span *ngIf="currentStep() <= s" class="text-xs transition-colors">{{ s }}</span>
+        </div>
+        <span class="text-[9px] font-black uppercase tracking-widest transition-colors duration-300"
+          [class.text-institutional]="currentStep() === s" [class.text-gray-400]="currentStep() !== s">
+          {{ stepLabels[s-1] }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Main Content Card -->
+    <div
+      class="bg-white dark:bg-gray-900 rounded-[3rem] shadow-2xl shadow-emerald-900/5 dark:shadow-emerald-900/20 border border-emerald-50/50 dark:border-gray-800 overflow-hidden min-h-[600px] flex flex-col relative transform transition-all duration-500">
+
+      <!-- Content Area -->
+      <div class="p-10 md:p-16 flex-1 relative">
+        <!-- Step 1: Identity -->
+        <app-identity-step *ngIf="currentStep() === 1" (next)="nextStep()"></app-identity-step>
+
+        <!-- Step 2: Documents (Using generalized doc component later) -->
+        <app-document-step *ngIf="currentStep() === 2" [title]="'C.I. Anverso'" [type]="'front'"
+          (next)="nextStep()"></app-document-step>
+        <app-document-step *ngIf="currentStep() === 3" [title]="'C.I. Reverso'" [type]="'back'"
+          (next)="nextStep()"></app-document-step>
+
+
+        <!-- Step 4: Documents (Multiple) -->
+        <app-documents-step *ngIf="currentStep() === 4" (next)="nextStep()"></app-documents-step>
+
+        <!-- Step 5: Biometrics -->
+        <app-biometric-step *ngIf="currentStep() === 5" (next)="nextStep()"></app-biometric-step>
+
+        <!-- Step 6: Success -->
+        <app-success-step *ngIf="currentStep() === 6"></app-success-step>
+      </div>
+
+      <!-- Navigation Footer (Optional context-aware buttons could go here) -->
+      <div *ngIf="currentStep() > 1 && currentStep() < 6"
+        class="absolute bottom-0 left-0 right-0 p-8 flex justify-between items-center pointer-events-none">
+        <button (click)="prevStep()"
+          class="pointer-events-auto px-6 py-3 text-gray-400 font-bold hover:text-institutional transition-colors flex items-center gap-2 text-xs uppercase tracking-widest">
+          <span class="material-icons text-sm">west</span> Atrás
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

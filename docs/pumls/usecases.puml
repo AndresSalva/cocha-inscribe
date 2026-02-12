@@ -1,0 +1,67 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+' Actores
+actor "Padre de Familia" as Parent
+actor "Director/Admin" as Admin
+actor "Sistema (Backend)" as Backend
+
+rectangle "Sistema de Inscripción Escolar" {
+
+    ' Módulo 1: Auth Module (Autenticación)
+    package "Módulo Autenticación (Auth)" {
+        usecase "Iniciar Sesión (Director)" as UC_Login
+        usecase "Validar Credenciales" as UC_ValidCred
+    }
+
+    ' Módulo 2: Catálogo Module (Búsqueda)
+    package "Módulo Catálogo (Público)" {
+        usecase "Consultar Colegios" as UC_Catalog
+        usecase "Ver Detalles y Cupos" as UC_Details
+        usecase "Filtrar por Zona" as UC_Filter
+    }
+
+    ' Módulo 3: Inscripción Module (Wizard)
+    package "Módulo Inscripción (Wizard)" {
+        usecase "Iniciar Trámite" as UC_Start
+        usecase "Validar RUDE y CI" as UC_Rude
+        usecase "Cargar Documentos" as UC_Docs
+        usecase "Prueba de Vida (Selfie)" as UC_Bio
+    }
+
+    ' Módulo 4: Admin Module (Gestión)
+    package "Módulo Administración (Admin)" {
+        usecase "Gestionar Solicitudes" as UC_Manage
+        usecase "Revisar Documentos" as UC_Review
+        usecase "Aprobar/Rechazar Cupo" as UC_Decide
+        usecase "Ver Panel de Cupos" as UC_Dash
+    }
+}
+
+' Relaciones del Padre (Frontend Público)
+Parent --> UC_Catalog
+Parent --> UC_Start
+
+UC_Catalog ..> UC_Filter : <<include>>
+UC_Catalog ..> UC_Details : <<include>>
+
+UC_Start ..> UC_Rude : <<include>>
+UC_Start ..> UC_Docs : <<include>>
+UC_Start ..> UC_Bio : <<include>>
+
+' Relaciones del Admin (Frontend Privado)
+Admin --> UC_Login
+Admin --> UC_Manage
+Admin --> UC_Dash
+
+UC_Manage ..> UC_Review : <<include>>
+UC_Manage ..> UC_Decide : <<extend>>
+
+' Interacciones con el Backend (API)
+UC_ValidCred <-- Backend : Valida Token
+UC_Rude <-- Backend : Valida RUDE
+UC_Details <-- Backend : Retorna Datos
+UC_Decide --> Backend : Actualiza Estado
+
+@enduml

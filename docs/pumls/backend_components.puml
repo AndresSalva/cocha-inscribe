@@ -1,0 +1,67 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+title Diagrama de Componentes - Backend (API REST Completo)
+
+Container(spa, "SPA Frontend", "Angular (Admin/Padres)", "Interfaz de Usuario.")
+ContainerDb(db, "Base de Datos", "PostgreSQL", "Tablas: Usuarios, Estudiantes, Inscripciones, Colegios.")
+Container(files, "File Storage", "Local/S3", "Almacenamiento físico de PDFs e Imágenes.")
+
+Container_Boundary(api, "API REST Backend (Spring Boot)") {
+
+    ' --- CONTROLADORES (Entrada) ---
+    ' Reciben las peticiones HTTP del Frontend
+    Component(ctrl_auth, "Auth Controller", "REST", "Login de Directores y Admins.")
+    Component(ctrl_admin, "Admin Controller", "REST", "Aprobación/Rechazo de solicitudes.")
+    Component(ctrl_enroll, "Inscripción Controller", "REST", "Recepción de trámites nuevos.")
+    Component(ctrl_school, "Colegio Controller", "REST", "Catálogo público y mapas.")
+    Component(ctrl_doc, "Documento Controller", "REST", "Endpoint de subida de archivos.")
+
+    ' --- SERVICIOS (Lógica de Negocio) ---
+    ' Procesan la información
+    Component(svc_security, "Security Service", "Service", "Valida passwords, genera Tokens JWT.")
+    Component(svc_enroll, "Inscripción Service", "Service", "Valida RUDE, Biometría y reglas de negocio.")
+    Component(svc_school, "Colegio Service", "Service", "Busca colegios y verifica disponibilidad de cupos.")
+    Component(svc_storage, "Storage Service", "Service", "Maneja la escritura de archivos en disco.")
+    Component(svc_pdf, "PDF Service", "Service", "Genera el comprobante de inscripción final.")
+
+    ' --- REPOSITORIOS (Acceso a Datos) ---
+    ' Interactúan con la Base de Datos
+    Component(repo_user, "Usuario Repository", "JPA", "Acceso a tabla 'Users' (Directores).")
+    Component(repo_enroll, "Inscripción Repository", "JPA", "Acceso a tablas 'Students' e 'Inscriptions'.")
+    Component(repo_school, "Colegio Repository", "JPA", "Acceso a tabla 'Schools' (Cupos).")
+
+    ' --- RELACIONES Y FLUJO LÓGICO ---
+    
+    ' 1. Flujo de Autenticación (Admin)
+    Rel(spa, ctrl_auth, "POST /login (User/Pass)")
+    Rel(ctrl_auth, svc_security, "Valida credenciales")
+    Rel(svc_security, repo_user, "Busca usuario por email")
+    Rel(repo_user, db, "SELECT password FROM users") 
+    
+    ' 2. Flujo de Inscripción (Padre)
+    Rel(spa, ctrl_enroll, "POST /enroll (Datos)")
+    Rel(ctrl_enroll, svc_enroll, "Procesa trámite")
+    Rel(svc_enroll, repo_school, "Descuenta 1 Cupo")
+    Rel(svc_enroll, repo_enroll, "Guarda nueva inscripción")
+    Rel(svc_enroll, svc_pdf, "Genera recibo")
+    Rel(repo_enroll, db, "INSERT INTO inscriptions")
+    Rel(repo_school, db, "UPDATE schools SET cupos = cupos - 1")
+
+    ' 3. Flujo de Archivos
+    Rel(spa, ctrl_doc, "POST /upload (Multipart)")
+    Rel(ctrl_doc, svc_storage, "Guarda físico")
+    Rel(svc_storage, files, "Escribe archivo")
+
+    ' 4. Flujo de Consulta (Catálogo)
+    Rel(spa, ctrl_school, "GET /schools")
+    Rel(ctrl_school, svc_school, "Filtra colegios")
+    Rel(svc_school, repo_school, "Lee datos")
+    
+    ' 5. Flujo Administrativo
+    Rel(spa, ctrl_admin, "PUT /approve/{id}")
+    Rel(ctrl_admin, svc_enroll, "Actualiza estado")
+    Rel(svc_enroll, repo_enroll, "UPDATE status='ACCEPTED'")
+}
+@enduml

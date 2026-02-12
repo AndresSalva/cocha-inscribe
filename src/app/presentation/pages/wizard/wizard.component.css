@@ -1,0 +1,4 @@
+/* Custom styles for Wizard */
+:host {
+    display: block;
+}

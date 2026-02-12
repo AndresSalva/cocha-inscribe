@@ -1,0 +1,15 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+title Diagrama de Contexto - Sistema de Inscripciones Escolares
+
+Person(parent, "Padre de Familia / Tutor", "Usuario responsable de la inscripción del estudiante.")
+Person(admin, "Personal Administrativo", "Director o secretario de la Unidad Educativa.")
+
+System(school_system, "Sistema de Inscripciones Escolares", "Plataforma digital para la gestión de inscripciones, validación de documentos y control de cupos.")
+
+Rel(parent, school_system, "Consulta catálogo, realiza inscripciones y descarga comprobantes")
+Rel(admin, school_system, "Valida solicitudes, gestiona cupos y genera reportes de admitidos")
+
+@enduml
