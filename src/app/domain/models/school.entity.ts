@@ -10,4 +10,9 @@ export interface School {
     vacancies: number;
     address: string;
     coordinates?: { lat: number; lng: number };
+    shift: string[]; // Mañana, Tarde, Noche
+    schedule: string; // Ej: 08:00 - 12:30
+    is_private: boolean;
+    type: 'Fiscal' | 'Convenio' | 'Privado';
+    price: number;
 }

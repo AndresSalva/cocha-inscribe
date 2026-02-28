@@ -7,24 +7,24 @@ import { RouterLink } from '@angular/router';
    standalone: true,
    imports: [CommonModule, RouterLink],
    template: `
-    <div class="animate-in pt-16 pb-24 px-6 md:px-0 bg-gradient-to-br from-emerald-50 via-white to-gray-50 dark:from-gray-950 dark:via-gray-900 dark:to-emerald-950/20 bg-repeat-x min-h-screen transition-colors duration-500">
+    <div class="animate-in pt-16 pb-24 px-6 md:px-0 bg-gradient-to-br from-emerald-50 via-white to-gray-50 bg-repeat-x min-h-screen transition-colors duration-500">
       <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         
         <!-- Hero Text Content -->
         <div class="space-y-8 animate-in delay-[200ms] text-center md:text-left">
-           <div class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 text-institutional dark:text-emerald-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-200 dark:border-emerald-900/50">
-              <span class="w-1.5 h-1.5 bg-institutional dark:bg-emerald-400 rounded-full animate-pulse"></span>
+           <div class="inline-flex items-center gap-2 bg-emerald-100 text-institutional px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-200">
+              <span class="w-1.5 h-1.5 bg-institutional rounded-full animate-pulse"></span>
               Periodo de Inscripciones 2026: Abierto
            </div>
 
-           <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-institutional dark:text-white leading-[0.9] tracking-tighter transition-colors duration-300">
+           <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-institutional leading-[0.9] tracking-tighter transition-colors duration-300">
              El futuro <br> 
-             <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-institutional-light dark:to-emerald-300">académico</span> <br>
+             <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-institutional-light">académico</span> <br>
              comienza aquí.
            </h1>
            
-           <p class="text-gray-500 dark:text-gray-400 font-medium text-lg leading-relaxed max-w-lg mx-auto md:mx-0">
-             Sistema oficial de inscripciones escolares del GAMC. Rápido, seguro y 100% digital.
+           <p class="text-gray-500 font-medium text-lg leading-relaxed max-w-lg mx-auto md:mx-0">
+             Sistema oficial de inscripciones escolares del Gobierno Autónomo Municipal de Cochabamba. Rápido, seguro y 100% digital.
            </p>
 
            <div class="flex flex-col md:flex-row items-center gap-4 pt-4">
@@ -32,7 +32,7 @@ import { RouterLink } from '@angular/router';
                  <span>INICIAR INSCRIPCIÓN</span>
                  <span class="material-icons text-sm">arrow_forward</span>
               </a>
-              <a routerLink="/catalogo" class="w-full md:w-auto px-8 py-4 bg-white dark:bg-white/5 text-institutional dark:text-white border border-emerald-100 dark:border-white/10 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-gray-50 dark:hover:bg-white/10 hover:border-emerald-300 shadow-sm transition-all text-xs uppercase tracking-widest">
+              <a routerLink="/catalogo" class="w-full md:w-auto px-8 py-4 bg-white text-institutional border border-emerald-100 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-gray-50 hover:border-emerald-300 shadow-sm transition-all text-xs uppercase tracking-widest">
                  Ver Colegios
               </a>
            </div>
@@ -45,27 +45,54 @@ import { RouterLink } from '@angular/router';
               <div class="w-px h-12 bg-gray-200"></div>
               <div class="space-y-1">
                  <p class="text-3xl font-black text-institutional">12k+</p>
-                 <p class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Estudiantes Inscritos</p>
+                 <p class="text-[10px] uppercase font-bold text-gray-400 tracking-widest">Cupos Disponibles</p>
               </div>
            </div>
         </div>
 
         <!-- Hero Visuals -->
-        <div class="relative w-full aspect-square md:aspect-[4/5] lg:aspect-square bg-emerald-900 rounded-[3rem] border-8 border-white dark:border-white/10 shadow-2xl overflow-hidden group">
+        <div class="relative w-full aspect-square md:aspect-[4/5] lg:aspect-square bg-emerald-900 rounded-[3rem] border-8 border-white shadow-2xl overflow-hidden group">
             <div class="absolute inset-0 bg-gradient-to-t from-institutional/90 to-transparent z-10"></div>
-            <!-- Placeholder for actual image or dynamic generation -->
+            <!-- School Context Image -->
             <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1577896335477-2858506f970d?q=80&w=2787&auto=format&fit=crop')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"></div>
             
             <div class="absolute bottom-10 left-10 right-10 z-20 text-white">
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20">
-                   <div class="flex items-center gap-4 mb-4">
-                      <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-institutional font-bold text-xs shadow-lg">JN</div>
+                <div class="bg-[#004b3b]/80 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 flex flex-col gap-4 shadow-2xl">
+                   
+                   <div class="flex items-center gap-4">
+                      <div class="w-12 h-12 rounded-full bg-emerald-400/20 flex items-center justify-center text-emerald-300">
+                          <span class="material-icons text-3xl">verified</span>
+                      </div>
                       <div>
-                         <p class="font-bold text-sm">Juan Nina</p>
-                         <p class="text-[10px] text-white/60 uppercase tracking-widest">Estudiante Destacado</p>
+                          <h3 class="font-black text-2xl tracking-tight text-white shadow-sm">Trámite 100% Digital</h3>
                       </div>
                    </div>
-                   <p class="text-xs md:text-sm font-medium leading-relaxed opacity-90">"El proceso fue increíblemente sencillo. Ahora tengo mi cupo asegurado en el colegio de mis sueños."</p>
+
+                   <div class="w-full h-px bg-gradient-to-r from-white/20 to-transparent my-2"></div>
+
+                   <p class="text-sm font-medium leading-relaxed opacity-90 text-emerald-50">
+                     Evita las filas. Asegura el cupo escolar desde la comodidad de tu hogar con la garantía y respaldo del GAMC.
+                   </p>
+
+                   <div class="grid grid-cols-2 gap-3 mt-2">
+                      <div class="flex items-center gap-2">
+                         <span class="material-icons text-emerald-400 text-sm">check_circle</span>
+                         <span class="text-xs font-bold text-white/80 uppercase tracking-wider">Gratuito</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                         <span class="material-icons text-emerald-400 text-sm">check_circle</span>
+                         <span class="text-xs font-bold text-white/80 uppercase tracking-wider">Seguro</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                         <span class="material-icons text-emerald-400 text-sm">check_circle</span>
+                         <span class="text-xs font-bold text-white/80 uppercase tracking-wider">Inmediato</span>
+                      </div>
+                      <div class="flex items-center gap-2">
+                         <span class="material-icons text-emerald-400 text-sm">check_circle</span>
+                         <span class="text-xs font-bold text-white/80 uppercase tracking-wider">Respaldado</span>
+                      </div>
+                   </div>
+
                 </div>
             </div>
         </div>

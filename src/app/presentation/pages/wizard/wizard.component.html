@@ -1,19 +1,19 @@
 <div
-  class="min-h-screen bg-gray-50/50 dark:bg-gray-950 font-sans text-gray-800 dark:text-gray-200 transition-colors duration-300">
+  class="min-h-screen bg-gray-50/50  font-sans text-gray-800  transition-colors duration-300">
   <div class="max-w-5xl mx-auto py-12 px-6">
 
     <!-- Stepper (Visual component) -->
     <div class="flex items-center justify-between mb-12 relative px-4 select-none">
       <!-- Logic line -->
-      <div class="absolute top-6 left-10 right-10 h-0.5 bg-gray-200 dark:bg-gray-800 -z-10 rounded-full"></div>
+      <div class="absolute top-6 left-10 right-10 h-0.5 bg-gray-200  -z-10 rounded-full"></div>
       <div class="absolute top-6 left-10 h-0.5 bg-institutional transition-all duration-700 ease-out -z-10 rounded-full"
         [style.width.%]="progress()"></div>
 
       <div *ngFor="let s of steps" class="flex flex-col items-center gap-3 group cursor-pointer" (click)="goToStep(s)">
         <div [ngClass]="{
              'bg-institutional text-white scale-110 shadow-xl shadow-institutional/30': currentStep() >= s,
-             'bg-white text-gray-300 border-2 border-gray-200 dark:bg-gray-900 dark:text-gray-600 dark:border-gray-800': currentStep() < s,
-             'ring-2 ring-offset-2 ring-institutional dark:ring-offset-gray-900': currentStep() === s
+             'bg-white text-gray-300 border-2 border-gray-200   ': currentStep() < s,
+             'ring-2 ring-offset-2 ring-institutional ': currentStep() === s
            }"
           class="w-12 h-12 rounded-2xl flex items-center justify-center font-black transition-all duration-300 ease-out z-10 relative">
           <span class="material-icons text-sm" *ngIf="currentStep() > s">check</span>
@@ -28,7 +28,7 @@
 
     <!-- Main Content Card -->
     <div
-      class="bg-white dark:bg-gray-900 rounded-[3rem] shadow-2xl shadow-emerald-900/5 dark:shadow-emerald-900/20 border border-emerald-50/50 dark:border-gray-800 overflow-hidden min-h-[600px] flex flex-col relative transform transition-all duration-500">
+      class="bg-white  rounded-[3rem] shadow-2xl shadow-emerald-900/5  border border-emerald-50/50  overflow-hidden min-h-[600px] flex flex-col relative transform transition-all duration-500">
 
       <!-- Content Area -->
       <div class="p-10 md:p-16 flex-1 relative">
